@@ -18,7 +18,7 @@
             android:layout_height="56dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -27,9 +27,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hintInputNick"
-                android:text="@{vm.nickname}"
-                app:onTextChanged="@{vm}"
-                />
+                android:text="@{ vm.nicknameLiveData.toString() }"
+                app:onTextChanged="@{ vm }" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -60,5 +60,6 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hintChatMessage" />
         </com.google.android.material.textfield.TextInputLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
