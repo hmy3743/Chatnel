@@ -1,11 +1,12 @@
 package com.myhan.chatnel
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.myhan.chatnel.databinding.ActivityMainBinding
 import com.myhan.chatnel.viewmodel.MainViewmodel
-import org.koin.android.ext.android.inject
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -17,5 +18,8 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.vm = viewmodel
         binding.lifecycleOwner = this
+
+        recyclerViewChatLog.adapter = ChatLogRecyclerviewItemAdapter(this, mutableListOf())
+        recyclerViewChatLog.layoutManager = LinearLayoutManager(this)
     }
 }

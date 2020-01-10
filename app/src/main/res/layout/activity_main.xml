@@ -18,7 +18,7 @@
             android:layout_height="56dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="100dp"
+            android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -28,38 +28,51 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hintInputNick"
                 android:text="@{ vm.nicknameLiveData.toString() }"
-                app:onTextChanged="@{ vm }" />
+                app:onNicknameChanged="@{ vm }" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewChatLog"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+            app:layout_constraintBottom_toTopOf="@+id/editText2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            app:item="@{vm.chatLogLiveData}"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            android:layout_width="409dp"
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@{ vm.messageLiveData.toString() }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:onMessageChanged="@{ vm }"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hintChatMessage" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintStart_toEndOf="@+id/editText2"
+            app:srcCompat="@drawable/ic_send_black_24dp"
+            android:contentDescription="TODO"
+            android:onClick="@{ () -> vm.onMessageSend() }"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

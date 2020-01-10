@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package com.myhan.chatnel;
+
+message Message {
+    string owner = 1;
+    string content = 2;
+    string type = 3;
+}

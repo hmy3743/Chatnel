@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.google.protobuf'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -16,6 +18,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables { useSupportLibrary = true }
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -31,6 +35,9 @@ android {
             useJUnitPlatform()
         }
         unitTests.returnDefaultValues = true
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
@@ -54,10 +61,43 @@ dependencies {
     // Koin Android Experimental features
     implementation "org.koin:koin-android-ext:$koin_version"
 
-    implementation 'com.tinder.scarlet:scarlet:0.1.9'
+    implementation "com.tinder.scarlet:scarlet:$scarlet_version"
+    implementation "com.tinder.scarlet:stream-adapter-rxjava2:$scarlet_version"
+    implementation "com.tinder.scarlet:websocket-okhttp:$scarlet_version"
+    // https://mvnrepository.com/artifact/com.tinder.scarlet/message-adapter-protobuf
+    implementation group: 'com.tinder.scarlet', name: 'message-adapter-protobuf', version: '0.1.9'
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
 
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-nop
     testImplementation group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.30'
 
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.2'
+
+    testImplementation "io.mockk:mockk:1.9"
+
+//    implementation 'com.google.protobuf:protobuf-lite:3.0.1'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        javalite {
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                remove java
+            }
+            task.plugins {
+                javalite {}
+            }
+        }
+    }
 }

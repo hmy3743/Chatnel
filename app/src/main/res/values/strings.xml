@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Chatnel</string>
     <string name="hintInputNick">Nick 입력</string>
-    <string name="hintChatMessage">Message 입력</string>
 </resources>
