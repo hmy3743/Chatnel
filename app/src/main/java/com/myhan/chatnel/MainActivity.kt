@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding.vm = viewmodel
         binding.lifecycleOwner = this
 
-        recyclerViewChatLog.adapter = ChatLogRecyclerviewItemAdapter(this, mutableListOf())
-        recyclerViewChatLog.layoutManager = LinearLayoutManager(this)
+        recyclerViewChatLog.adapter = ChatLogRecyclerviewItemAdapter(this, mutableListOf(), viewmodel.uid)
+        recyclerViewChatLog.layoutManager = LinearLayoutManager(this).apply { stackFromEnd = true }
     }
 }

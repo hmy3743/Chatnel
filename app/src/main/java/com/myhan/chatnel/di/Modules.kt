@@ -1,12 +1,12 @@
 package com.myhan.chatnel.di
 
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Database
+import androidx.room.Room
 import com.google.protobuf.Internal
 import com.google.protobuf.MessageLite
-import com.myhan.chatnel.model.ChatMessage
-import com.myhan.chatnel.model.ChatService
-import com.myhan.chatnel.model.Repository
-import com.myhan.chatnel.model.RepositoryImpl
+import com.myhan.chatnel.Registry
+import com.myhan.chatnel.model.*
 import com.myhan.chatnel.viewmodel.MainViewmodel
 import com.tinder.scarlet.Scarlet
 import com.tinder.scarlet.messageadapter.protobuf.ProtobufMessageAdapter
@@ -14,6 +14,7 @@ import com.tinder.scarlet.streamadapter.rxjava2.RxJava2StreamAdapterFactory
 import com.tinder.scarlet.websocket.okhttp.newWebSocketFactory
 import okhttp3.OkHttpClient
 import org.koin.android.experimental.dsl.viewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -24,6 +25,8 @@ val appModule = module {
     factory { mutableListOf<ChatMessage>() }
     factory(named("LiveChatMessage")) { MutableLiveData<ChatMessage>() }
     factory(named("LiveString")) { MutableLiveData<String>() }
+
+    single { Registry(androidContext()) }
 
     single {
         OkHttpClient.Builder().build()
@@ -37,9 +40,18 @@ val appModule = module {
             .build()
     }
 
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            AppDatabase::class.java, "database-local"
+        ).build()
+    }
+
+    single { get<AppDatabase>().chatMessageDao() }
+
     single { get<Scarlet>().create<ChatService>() }
 
-    single<Repository> { RepositoryImpl(get(), get()) }
+    single<Repository> { RepositoryImpl(get(), get(), get(), get()) }
 
     viewModel { MainViewmodel(get(), get(named("LiveString")), get(named("LiveString")), get(named("LiveChatMessage"))) }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.myhan.chatnel.model.ChatMessage
 import com.myhan.chatnel.model.Repository
+import com.myhan.chatnel.randomString
 
 class MainViewmodel(
     val repo: Repository,
@@ -15,6 +16,9 @@ class MainViewmodel(
     var nickname: String = "nickname"
         private set
     var message: String = ""
+
+    val uid: String
+        get() = repo.uid
 
     init {
         nicknameLiveData.postValue(nickname)
@@ -41,7 +45,9 @@ class MainViewmodel(
     }
 
     fun onMessageSend() {
-        repo.sendMessage(ChatMessage(content = message, owner = nickname, type = "chat/plainText"))
+        repo.sendMessage(ChatMessage(content = message, owner = nickname, type = "chat/plainText", uid = repo.uid))
         onMessageChange("")
     }
+
+    fun onGetAllMessage() = repo.getMessages()
 }

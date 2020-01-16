@@ -6,18 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.myhan.chatnel.model.ChatMessage
-import kotlinx.android.synthetic.main.chat_log_recyclerview_item.view.*
+import kotlinx.android.synthetic.main.chat_log_recyclerview_item_outcome.view.*
 
-class ChatLogRecyclerviewItemAdapter(val context: Context, val logList: MutableList<ChatMessage>): RecyclerView.Adapter<ChatLogRecyclerviewItemAdapter.ChatLogRecyclerviewItemViewHolder>() {
+class ChatLogRecyclerviewItemAdapter(
+    private val context: Context,
+    val logList: MutableList<ChatMessage>,
+    private val selfUid: String
+): RecyclerView.Adapter<ChatLogRecyclerviewItemAdapter.ChatLogRecyclerviewItemViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ChatLogRecyclerviewItemViewHolder {
         return ChatLogRecyclerviewItemViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.chat_log_recyclerview_item, parent, false)
+            if(viewType == 0)
+                LayoutInflater.from(context).inflate(R.layout.chat_log_recyclerview_item_outcome, parent, false)
+            else
+                LayoutInflater.from(context).inflate(R.layout.chat_log_recyclerview_item_income, parent, false)
         )
     }
+
+    override fun getItemViewType(position: Int): Int =
+        if(logList[position].uid == selfUid) 0 else 1
 
     override fun getItemCount(): Int {
         return logList.count()

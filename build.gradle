@@ -6,6 +6,7 @@ buildscript {
     ext.protobuf_version = '0.8.11'
     ext.scarlet_version = '0.1.9'
     ext.okhttp_version = '4.3.1'
+    ext.room_version = "2.2.2"
     repositories {
         google()
         jcenter()
