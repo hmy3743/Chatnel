@@ -10,11 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/contentOutCome"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.myhan.chatnel.view.BubbledTextViewIncome
-        android:id="@+id/content"
+    <com.myhan.chatnel.view.BubbledTextViewOutcome
+        android:id="@+id/contentOutCome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
