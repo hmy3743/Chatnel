@@ -9,5 +9,6 @@ data class ChatMessageEntity (
     val owner: String,
     val content: String,
     val type: String,
-    val uid: String
+    val uid: String,
+    val guid: String
 )

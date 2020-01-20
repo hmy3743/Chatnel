@@ -16,7 +16,7 @@ class RepositoryImpl(
 ): Repository {
     init {
         chatService.observeMessage().subscribe {
-            ChatMessageEntity(owner = it.owner, content = it.content, type = it.type, uid = it.uid).save()
+            ChatMessageEntity(owner = it.owner, content = it.content, type = it.type, uid = it.uid, guid = it.guid).save()
         }
     }
 

@@ -6,7 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.widget.TextView
 
-class BubbledTextViewIncome @JvmOverloads constructor(
+class BubbledTextViewFromOut @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BubbledTextView(context, attrs, defStyleAttr) {
     override fun onDraw(canvas: Canvas?) {

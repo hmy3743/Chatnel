@@ -3,6 +3,7 @@ package com.myhan.chatnel.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.messaging.FirebaseMessaging
 import com.myhan.chatnel.model.ChatMessage
 import com.myhan.chatnel.model.Repository
 import com.myhan.chatnel.randomString

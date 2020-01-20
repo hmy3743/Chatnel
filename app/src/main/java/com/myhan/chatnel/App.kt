@@ -1,6 +1,7 @@
 package com.myhan.chatnel
 
 import android.app.Application
+import com.google.firebase.messaging.FirebaseMessaging
 import com.myhan.chatnel.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -14,5 +15,7 @@ class App: Application() {
             androidContext(this@App)
             modules(appModule)
         }
+
+        FirebaseMessaging.getInstance().subscribeToTopic("public")
     }
 }

@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.myhan.chatnel.model.ChatMessage
-import kotlinx.android.synthetic.main.chat_log_recyclerview_item_income.view.*
-import kotlinx.android.synthetic.main.chat_log_recyclerview_item_outcome.view.*
-import kotlinx.android.synthetic.main.chat_log_recyclerview_item_outcome.view.owner
+import kotlinx.android.synthetic.main.chat_log_recyclerview_item_from_out.view.*
+import kotlinx.android.synthetic.main.chat_log_recyclerview_item_from_me.view.*
+import kotlinx.android.synthetic.main.chat_log_recyclerview_item_from_me.view.owner
 
 class ChatLogRecyclerviewItemAdapter(
     private val context: Context,
@@ -17,8 +17,8 @@ class ChatLogRecyclerviewItemAdapter(
 ): RecyclerView.Adapter<ChatLogRecyclerviewItemAdapter.ChatLogRecyclerviewItemViewHolder>() {
 
     companion object {
-        val OUTCOME = 0
-        val INCOME = 1
+        val MESSAGE_FROM_ME = 0
+        val MESSAGE_FROM_OUT = 1
     }
 
     override fun onCreateViewHolder(
@@ -27,14 +27,14 @@ class ChatLogRecyclerviewItemAdapter(
     ): ChatLogRecyclerviewItemViewHolder {
         return ChatLogRecyclerviewItemViewHolder(
             when(viewType) {
-                OUTCOME -> LayoutInflater.from(context).inflate(
-                    R.layout.chat_log_recyclerview_item_outcome,
+                MESSAGE_FROM_ME -> LayoutInflater.from(context).inflate(
+                    R.layout.chat_log_recyclerview_item_from_me,
                     parent,
                     false
                 )
-                INCOME -> LayoutInflater
+                MESSAGE_FROM_OUT -> LayoutInflater
                     .from(context).inflate(
-                    R.layout.chat_log_recyclerview_item_income,
+                    R.layout.chat_log_recyclerview_item_from_out,
                     parent,
                     false
                 )
@@ -44,7 +44,7 @@ class ChatLogRecyclerviewItemAdapter(
     }
 
     override fun getItemViewType(position: Int): Int =
-        if(logList[position].uid == selfUid) INCOME else OUTCOME
+        if(logList[position].uid == selfUid) MESSAGE_FROM_ME else MESSAGE_FROM_OUT
 
     override fun getItemCount(): Int {
         return logList.count()
@@ -65,8 +65,8 @@ class ChatLogRecyclerviewItemAdapter(
             set(value) {
                 field = value
                 when(viewType){
-                    INCOME -> itemView.contentIncome.text = field
-                    OUTCOME -> itemView.contentOutCome.text = field
+                    MESSAGE_FROM_OUT -> itemView.contentFromOut.text = field
+                    MESSAGE_FROM_ME -> itemView.contentFromMe.text = field
                 }
             }
     }
