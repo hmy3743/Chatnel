@@ -11,7 +11,6 @@ import io.reactivex.Single
 class RepositoryImpl(
     private val registry: Registry,
     private val chatService: ChatService,
-    private val messages: MutableList<ChatMessage>,
     private val chatMessageDao: ChatMessageDao
 ): Repository {
     init {
@@ -23,10 +22,12 @@ class RepositoryImpl(
     override val uid: String
         get() = registry.uid
 
-    override fun getMessage(): Flowable<ChatMessage> = chatMessageDao.getLast().map { ChatMessage(owner = it.owner, content = it.content, type = it.type, uid = it.uid) }
+    override fun getMessage(): Flowable<ChatMessage> = chatMessageDao.getLast().map {
+        ChatMessage(owner = it.owner, content = it.content, type = it.type, uid = it.uid, guid = it.guid)
+    }
 
     override fun getMessages(): Single<List<ChatMessage>> = chatMessageDao.getAll().map {
-        it.map { ChatMessage(owner = it.owner, content = it.content, type = it.type) }
+        it.map { ChatMessage(owner = it.owner, content = it.content, type = it.type, uid = it.uid, guid = it.guid) }
     }
 
     override fun connect(): Flowable<WebSocket.Event> = chatService.observeWebSocketEvent()

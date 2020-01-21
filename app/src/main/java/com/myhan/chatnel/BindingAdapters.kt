@@ -33,7 +33,8 @@ fun onTextChanged(view: EditText, vm: MainViewmodel) {
 @BindingAdapter("item")
 fun bindItem(view: RecyclerView, chatLogLiveData: LiveData<ChatMessage>) {
     val adapter = view.adapter as ChatLogRecyclerviewItemAdapter
-    if(chatLogLiveData.value != null) {
+    if(chatLogLiveData.value != null && adapter.logList.lastOrNull()?.guid != chatLogLiveData.value!!.guid) {
+        Log.d("debug", "${adapter.logList.lastOrNull()?.guid} != ${chatLogLiveData.value!!.guid}")
         adapter.logList.add(chatLogLiveData.value!!)
         adapter.notifyItemInserted(adapter.logList.count() - 1)
         view.scrollToPosition(adapter.logList.count() - 1)
@@ -48,6 +49,7 @@ fun bindItems(view: RecyclerView, chatLogs: Single<List<ChatMessage>>) {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { it, err ->
             Log.d("debug", "err: $err")
+            adapter.logList.clear()
             adapter.logList.addAll(it)
             adapter.notifyDataSetChanged()
             view.scrollToPosition(adapter.logList.count() - 1)

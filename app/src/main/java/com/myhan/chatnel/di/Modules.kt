@@ -51,7 +51,7 @@ val appModule = module {
 
     single { get<Scarlet>().create<ChatService>() }
 
-    single<Repository> { RepositoryImpl(get(), get(), get(), get()) }
+    single<Repository> { RepositoryImpl(get(), get(), get()) }
 
     viewModel { MainViewmodel(get(), get(named("LiveString")), get(named("LiveString")), get(named("LiveChatMessage"))) }
 }

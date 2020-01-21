@@ -7,7 +7,7 @@ import com.myhan.chatnel.model.Entity.ChatMessageEntity
 
 @Database(entities = arrayOf(
     ChatMessageEntity::class
-), version = 2, exportSchema = false)
+), version = 3, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun chatMessageDao(): ChatMessageDao
 }
