@@ -3,50 +3,50 @@ package com.myhan.chatnel
 import androidx.lifecycle.MutableLiveData
 import com.myhan.chatnel.model.ChatMessage
 import com.myhan.chatnel.model.Repository
-import com.myhan.chatnel.util.LiveDataPostValueCalledException
+import com.myhan.chatnel.model.RepositoryImpl
 import com.myhan.chatnel.viewmodel.MainViewmodel
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldThrowExactly
-import io.kotlintest.specs.StringSpec
-import io.mockk.Runs
-import io.mockk.every
-import io.mockk.just
-import io.mockk.mockk
-import io.reactivex.Single
+import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
 
-class MainViewmodelTest : StringSpec({
-    "onNicknameChange should change nickname" {
-        val testNickame = "testNickname"
+class MainViewmodelTest {
+    companion object {
+        @BeforeAll
+        @JvmStatic
+        fun runOnceBeforeTestStart() {
+            println("@Before All")
+        }
 
-        val mockNicknameLiveData: MutableLiveData<String> = mockk()
-        every { mockNicknameLiveData.postValue(any()) } just Runs
-
-        val vm = MainViewmodel(mockk(), mockNicknameLiveData, mockk(relaxed = true), mockk(relaxed = true))
-
-        vm.onNicknameChange(testNickame)
-
-        vm.nickname shouldBe testNickame
+        @AfterAll
+        @JvmStatic
+        fun runOnceAfterTestsFinished() {
+            println("@After All")
+        }
     }
-    "onNicknameChange should call nicknameLiveData.postValue" {
-        val testNickame = "testNickname"
-        val nicknameLiveData: MutableLiveData<String> = mockk()
 
-        every { nicknameLiveData.postValue(any()) } just Runs
-        every { nicknameLiveData.postValue(testNickame) } throws LiveDataPostValueCalledException()
+    private var mainViewmodel: MainViewmodel? = null
+    private var repository: RepositoryImpl? = null
+    private var nicknameLiveData: MutableLiveData<String>? = null
+    private var messageLiveData: MutableLiveData<String>? = null
+    private var chatLogLiveData: MutableLiveData<ChatMessage>? = null
 
-        val vm = MainViewmodel(mockk(), nicknameLiveData, mockk(relaxed = true), mockk(relaxed = true))
-
-        shouldThrowExactly<LiveDataPostValueCalledException> { vm.onNicknameChange(testNickame) }
+    @BeforeEach
+    internal fun runOnceBeforeEveryTest(info: TestInfo) {
+        println("@Before Test ${info.displayName}")
     }
-    "getChatLogAt should get message that index = id" {
-        val repo: Repository = mockk()
 
-        val index = 2
-        val ret: Single<ChatMessage?> = mockk(name = "2")
-
-        every { repo.messageAt(2) } returns ret
-
-        val vm = MainViewmodel(repo, mockk(relaxed = true), mockk(relaxed = true), mockk(relaxed = true))
-        vm.getChatLogAt(index) shouldBe ret
+    @BeforeEach
+    internal fun runOnceAfterEveryTest(info: TestInfo) {
+        println("@After Test ${info.displayName}")
     }
-})
+
+    @Test
+    @Disabled
+    internal fun failingDisabledTest() {
+        assertEquals(5, 2 + 2)
+    }
+
+    @Test
+    internal fun ordinaryTestCase() {
+        assertEquals(4, 2 + 2)
+    }
+}
